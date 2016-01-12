@@ -7,8 +7,11 @@ except ImportError:
 
 setup(name='passgen',
       version='0.0.1',
+      description='Strong password generator',
+      url='https://github.com/soslan/passgen',
       author='Soslan Khubulov',
       author_email='soslanx@gmail.com',
+      license='MIT',
       package_dir={'': 'src'},
       entry_points={
           'console_scripts': [
@@ -16,4 +19,9 @@ setup(name='passgen',
           ],
       },
       py_modules=['passgen'],
+      classifiers=[
+          'Development Status :: 2 - Pre-Alpha',
+          'Programming Language :: Python :: 2.7',
+      ],
+      keywords='password',
       )
