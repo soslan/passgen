@@ -6,7 +6,7 @@ except ImportError:
     from distutils.core import setup
 
 setup(name='passgen',
-      version='0.0.1',
+      version='0.0.2',
       description='Strong password generator',
       url='https://github.com/soslan/passgen',
       author='Soslan Khubulov',
@@ -15,7 +15,7 @@ setup(name='passgen',
       package_dir={'': 'src'},
       entry_points={
           'console_scripts': [
-              'passgen = passgen:passgen',
+              'passgen = passgen:main',
           ],
       },
       py_modules=['passgen'],
