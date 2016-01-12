@@ -10,4 +10,4 @@ def passgen():
 
 def main():
     for _ in range(10):
-        print generate()
+        print passgen()
