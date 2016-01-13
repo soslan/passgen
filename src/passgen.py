@@ -12,9 +12,12 @@ def passgen(length=8):
 def main():
     parser = argparse.ArgumentParser("Generate strong random password.")
     parser.add_argument("length",
-                        help="the number of characters to generate ",
+                        help="the number of characters to generate",
+                        type=int)
+    parser.add_argument("-n", "--number",
+                        help="how many passwords to generate",
                         type=int)
 
     args = parser.parse_args()
-    for _ in range(10):
+    for _ in range(args.number):
         print passgen(args.length)
