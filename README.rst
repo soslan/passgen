@@ -31,14 +31,14 @@ Overall synopsis is:
 
 Arguments:
 
-    -h
-        Display help
+-h
+    Display help
 
-    -l, --length LENGTH
-        Passwords should contain LENGTH characters
+-l, --length LENGTH
+    Passwords should contain LENGTH characters
 
-    -n, --number NUMBER
-        Generate NUMBER passwords
+-n, --number NUMBER
+    Generate NUMBER passwords
 
 Examples
 --------
@@ -47,7 +47,7 @@ Below are some examples of passgen usage:
 
 .. code-block:: bash
 
-	# Most basic usage. Outputs 10 passwords.
+    # Most basic usage. Outputs 10 passwords.
     $ passgen
 
     # Using -n argument. Generate just two passwords.
