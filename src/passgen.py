@@ -2,10 +2,10 @@ import string
 import random
 
 
-def passgen():
-    """Generate a strong password"""
+def passgen(length=8):
+    """Generate a strong password with *length* characters"""
     pool = string.ascii_uppercase + string.ascii_lowercase + string.digits
-    return ''.join(random.SystemRandom().choice(pool) for _ in range(12))
+    return ''.join(random.SystemRandom().choice(pool) for _ in range(length))
 
 
 def main():
