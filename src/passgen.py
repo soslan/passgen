@@ -3,9 +3,11 @@ import random
 import argparse
 
 
-def passgen(length=12):
+def passgen(length=12, punctuation=False):
     """Generate a strong password with *length* characters"""
     pool = string.ascii_uppercase + string.ascii_lowercase + string.digits
+    if punctuation:
+        pool = pool + string.punctuation
 
     # Using technique from Stack Overflow answer
     # http://stackoverflow.com/a/23728630
@@ -24,7 +26,10 @@ def main():
     parser.add_argument("-n", "--number",
                         help="how many passwords to generate",
                         type=int, default=10)
+    parser.add_argument("-p", "--punctuation",
+                        help="use punctuation characters",
+                        action='store_true')
     args = parser.parse_args()
 
     for _ in range(args.number):
-        print passgen(args.length)
+        print passgen(args.length, punctuation=args.punctuation)
