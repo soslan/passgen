@@ -3,13 +3,16 @@ import random
 import argparse
 
 
-def passgen(length=12, punctuation=False, digits=True):
+def passgen(length=12, punctuation=False, digits=True, letters=True):
     """Generate a strong password with *length* characters"""
-    pool = string.ascii_uppercase + string.ascii_lowercase
+    pool = []
+    if letters:
+        pool.append(string.ascii_uppercase + string.ascii_lowercase)
     if digits:
-        pool = pool + string.digits
+        pool.append(string.digits)
     if punctuation:
-        pool = pool + string.punctuation
+        pool.append(string.punctuation)
+    pool = "".join(pool)
 
     # Using technique from Stack Overflow answer
     # http://stackoverflow.com/a/23728630
@@ -34,8 +37,13 @@ def main():
     parser.add_argument("--no-digits",
                         help="don't include digits",
                         action='store_false', dest='digits')
+    parser.add_argument("--no-letters",
+                        help="don't include letters",
+                        action='store_false', dest='letters')
     args = parser.parse_args()
-    print args
+    print(args)
+
     for _ in range(args.number):
-        print passgen(args.length, punctuation=args.punctuation,
-                      digits=args.digits)
+        print(passgen(args.length, punctuation=args.punctuation,
+                      digits=args.digits,
+                      letters=args.letters))
