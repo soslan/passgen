@@ -68,6 +68,11 @@ def main():
     args = parser.parse_args()
     print(args)
 
+    if args.length < 1:
+        _error("argument -l/--length must be greater than zero")
+    if args.number < 1:
+        _error("argument -n/--number must be greater than zero")
+
     if args.lower:
         case = "lower"
     elif args.upper:
