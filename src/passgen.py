@@ -8,7 +8,37 @@ import sys
 
 def passgen(length=12, punctuation=False, digits=True, letters=True,
             case="both"):
-    """Generate a random password with *length* characters"""
+    """Generate random password.
+
+    Args:
+        length (int): The length of the password.  Must be greater than
+            zero. Defaults to 12.
+        punctuation (bool): Whether to use punctuation or not.  Defaults
+            to False.
+        digits (bool): Whether to use digits or not.  Defaults to True.
+        letters (bool): Whether to use letters or not.  Defaults to
+            True.
+        case (str): Letter case to use.  Accepts 'upper' for upper case,
+            'lower' for lower case, and 'both' for both.  Defaults to
+            'both'.
+
+    Returns:
+        str. The generated password.
+
+    Raises:
+        ValueError
+
+    Below are some basic examples.
+
+    >>> passgen()
+    z7GlutdEEbnk
+
+    >>> passgen(case='upper')
+    Q81J9DOAMBRN
+
+    >>> passgen(length=6)
+    EzJMRX
+    """
     if length < 1:
         raise ValueError("length must be greater than zero")
     pool = []
