@@ -28,7 +28,7 @@ Overall synopsis is:
 .. code-block:: bash
 
     $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits] [--no-letters]
-              [--upper] [--lower]
+              [--upper | --lower]
 
 Arguments:
 
