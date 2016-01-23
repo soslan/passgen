@@ -118,3 +118,6 @@ def main():
         print(passgen(args.length, punctuation=args.punctuation,
                       digits=args.digits,
                       letters=args.letters, case=case))
+
+if __name__ == "__main__":
+    main()
