@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+"""This module contains tools for random password generation.
+
+The module contains two functions:
+
+    - passgen -- generate random password.
+    - main -- the main entry point.
+"""
 from __future__ import print_function
 import string
 import random
@@ -72,6 +79,18 @@ def _error(msg=""):
 
 
 def main():
+    """The main entry point for command line invocation. It's output
+    is adjusted by command line arguments. By default it outputs 10
+    passwords.
+
+    For help on accepted arguments, run::
+
+        $ passgen -h
+
+    Or::
+
+        $ python -m passgen -h
+    """
     parser = argparse.ArgumentParser(
         description="Generate random password."
     )
@@ -100,7 +119,6 @@ def main():
                             help="use only lower case letters",
                             action='store_true')
     args = parser.parse_args()
-    print(args)
 
     if args.length < 1:
         _error("argument -l/--length must be greater than zero")
