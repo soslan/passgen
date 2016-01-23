@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+from __future__ import print_function
 import string
 import random
 import argparse
+import sys
 
 
 def passgen(length=12, punctuation=False, digits=True, letters=True,
@@ -28,6 +31,11 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     # http://stackoverflow.com/a/23728630
     chars = [random.SystemRandom().choice(pool) for _ in range(length)]
     return "".join(chars)
+
+
+def _error(msg=""):
+    print("passgen: error: " + msg, file=sys.stderr)
+    sys.exit(1)
 
 
 def main():
@@ -61,8 +69,9 @@ def main():
 
     if args.lower and args.upper:
         # --lower and --upper should not be combined
-        print("Error. --lower and --upper can not be combined.")
-        return 0
+        # sys.stderr.write("passgen: error: --lower and --upper can "
+        #                  "not be combined.")
+        _error("--lower and --upper can not be combined.")
     if args.lower:
         case = "lower"
     elif args.upper:
