@@ -16,8 +16,9 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
         punctuation (bool): Whether to use punctuation or not.  Defaults
             to False.
         digits (bool): Whether to use digits or not.  Defaults to True.
+            One of *digits* and *letters* must be True.
         letters (bool): Whether to use letters or not.  Defaults to
-            True.
+            True. One of *digits* and *letters* must be True.
         case (str): Letter case to use.  Accepts 'upper' for upper case,
             'lower' for lower case, and 'both' for both.  Defaults to
             'both'.
@@ -39,6 +40,8 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     >>> passgen(length=6)
     EzJMRX
     """
+    if not digits and not letters:
+        raise ValueError("digits and letters cannot be False at the same time")
     if length < 1:
         raise ValueError("length must be greater than zero")
     pool = []
@@ -82,12 +85,13 @@ def main():
     parser.add_argument("-p", "--punctuation",
                         help="use punctuation characters",
                         action='store_true')
-    parser.add_argument("--no-digits",
-                        help="don't use digits",
-                        action='store_false', dest='digits')
-    parser.add_argument("--no-letters",
-                        help="don't use letters",
-                        action='store_false', dest='letters')
+    alnum_group = parser.add_mutually_exclusive_group()
+    alnum_group.add_argument("--no-digits",
+                             help="don't use digits",
+                             action='store_false', dest='digits')
+    alnum_group.add_argument("--no-letters",
+                             help="don't use letters",
+                             action='store_false', dest='letters')
     case_group = parser.add_mutually_exclusive_group()
     case_group.add_argument("--upper",
                             help="use only upper case letters",
