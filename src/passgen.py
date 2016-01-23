@@ -40,23 +40,23 @@ def _error(msg=""):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate strong random password."
+        description="Generate random password."
     )
     parser.add_argument("-l", "--length",
-                        help="the number of characters to generate "
-                             "for each password",
+                        help="the length of the generated "
+                             "password (default: 12)",
                         type=int, default=12)
     parser.add_argument("-n", "--number",
-                        help="how many passwords to generate",
+                        help="how many passwords to generate (default: 10)",
                         type=int, default=10)
     parser.add_argument("-p", "--punctuation",
                         help="use punctuation characters",
                         action='store_true')
     parser.add_argument("--no-digits",
-                        help="don't include digits",
+                        help="don't use digits",
                         action='store_false', dest='digits')
     parser.add_argument("--no-letters",
-                        help="don't include letters",
+                        help="don't use letters",
                         action='store_false', dest='letters')
     case_group = parser.add_mutually_exclusive_group()
     case_group.add_argument("--upper",
