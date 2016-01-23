@@ -58,20 +58,16 @@ def main():
     parser.add_argument("--no-letters",
                         help="don't include letters",
                         action='store_false', dest='letters')
-    parser.add_argument("--upper",
-                        help="use only upper case letters",
-                        action='store_true')
-    parser.add_argument("--lower",
-                        help="use only lower case letters",
-                        action='store_true')
+    case_group = parser.add_mutually_exclusive_group()
+    case_group.add_argument("--upper",
+                            help="use only upper case letters",
+                            action='store_true')
+    case_group.add_argument("--lower",
+                            help="use only lower case letters",
+                            action='store_true')
     args = parser.parse_args()
     print(args)
 
-    if args.lower and args.upper:
-        # --lower and --upper should not be combined
-        # sys.stderr.write("passgen: error: --lower and --upper can "
-        #                  "not be combined.")
-        _error("--lower and --upper can not be combined.")
     if args.lower:
         case = "lower"
     elif args.upper:
