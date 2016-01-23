@@ -21,7 +21,7 @@ Basic usage of passgen command line utility is as follows::
 passgen can also accepts several arguments configuring the outcome.
 Overall synopsis is::
 
-    $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits] [--no-letters]
+    $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits | --no-letters]
               [--upper | --lower]
 
 Arguments:
@@ -70,6 +70,7 @@ Python module
 passgen Python module provides just one function also called passgen.
 
 passgen(length=12, punctuation=False, digits=True, letters=True, case='both')
+
     Returns a random string with *length* characters. *punctuation*, *digits*
     and *letters* arguments specify whether punctuation, digits and letters
     should be used. *case* specifies letter case and can be one of 'upper',
