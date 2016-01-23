@@ -56,6 +56,12 @@ Below are some examples of passgen usage:
     # Using -l argument. Generate passwords with eight characters.
     $ passgen -l 8
 
+TODO
+====
+
+- Implement generation from format string.
+  For example, 'ddd' generating three-digit password.
+
 License
 =======
 
