@@ -27,7 +27,8 @@ Overall synopsis is:
 
 .. code-block:: bash
 
-    $ passgen [-h] [-l LENGTH] [-n NUMBER]
+    $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits] [--no-letters]
+              [--upper] [--lower]
 
 Arguments:
 
@@ -35,10 +36,25 @@ Arguments:
     Display help
 
 -l, --length LENGTH
-    Passwords should contain LENGTH characters
+    Passwords should contain LENGTH characters. Defaults to 12.
 
 -n, --number NUMBER
-    Generate NUMBER passwords
+    Generate NUMBER passwords. Defaults to 10.
+
+-p, --punctuation
+    Use punctuation characters
+
+--no-digits
+    Don't use digits
+
+--no-letters
+    Don't use letters
+
+--upper
+    Use only upper case letters
+
+--lower
+    Use only lower case letters
 
 Examples
 --------
