@@ -5,7 +5,9 @@ import argparse
 
 def passgen(length=12, punctuation=False, digits=True, letters=True,
             case="both"):
-    """Generate a strong password with *length* characters"""
+    """Generate a random password with *length* characters"""
+    if length < 1:
+        raise ValueError("length must be greater than zero")
     pool = []
     if letters:
         if case == "both":
@@ -14,6 +16,8 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
             pool.append(string.ascii_uppercase)
         elif case == "lower":
             pool.append(string.ascii_lowercase)
+        else:
+            raise ValueError("case can only be 'both', 'upper' or 'lower'")
     if digits:
         pool.append(string.digits)
     if punctuation:
