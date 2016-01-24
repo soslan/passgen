@@ -24,7 +24,8 @@ To install in development mode, run from project directory::
 Usage (command line)
 ====================
 
-Basic usage of passgen command line utility is as follows::
+The most basic usage of passgen command line utility prints 10 random
+passwords, and is as follows::
 
     $ passgen
 
@@ -63,38 +64,62 @@ Arguments:
 Examples
 --------
 
-Below are some examples of passgen usage::
+Below are some examples of passgen usage.
 
-    # Most basic usage. Outputs 10 passwords.
-    $ passgen
+Output one password::
 
-    # Using -n argument. Generate just two passwords.
-    $ passgen -n 2
+    $ passgen -n 1
+    faFMKqApw24P
 
-    # Using -l argument. Generate passwords with eight characters.
-    $ passgen -l 8
+Generate one password with eight characters::
+
+    $ passgen -n 1 -l 8
+    h2MowzBQ
+
+Generate one password with all upper case letters::
+
+    $ passgen -n 1 --upper
+    3TLJ73WQSG6U
+
+Generate one password with punctuation characters::
+
+    $ passgen -n 1 -p
+    oFmCF|s8kCE~
 
 Python module
 =============
 
 passgen Python module provides just one function also called passgen.
 
-passgen(length=12, punctuation=False, digits=True, letters=True, case='both')
+| ``passgen(length=12, punctuation=False, digits=True, letters=True,
+            case='both')``
 
-    Returns a random string with *length* characters. *punctuation*, *digits*
-    and *letters* arguments specify whether punctuation, digits and letters
-    should be used. *case* specifies letter case and can be one of 'upper',
-    'lower' or 'both'.
+It returns a random string with *length* characters. *punctuation*, *digits*
+and *letters* arguments specify whether punctuation, digits and letters
+should be used. *case* specifies letter case and can be one of 'upper',
+'lower' or 'both'.
 
 For more details, run::
 
     $ python -c 'import passgen; help(passgen.passgen)'
+
+Testing
+=======
+
+The passgen tests are done using ``unittest``. For running the tests, run from
+project directory::
+
+    $ python tests/test_passgen.py -v
 
 TODO
 ====
 
 - Implement generation from format string.
   For example, 'ddd' generating three-digit password.
+
+- Allow occurance restrictions on punctuation, digits and letters.
+  For example, ``passgen(min-punctuation=1)`` returning password with at least
+  one punctuation.
 
 License
 =======
