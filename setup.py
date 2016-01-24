@@ -9,7 +9,7 @@ with open('README.rst') as file:
     long_description = file.read()
 
 setup(name='passgen',
-      version='1.0.0',
+      version='1.0.1',
       description='Random password generator',
       long_description=long_description,
       url='https://github.com/soslan/passgen',
