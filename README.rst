@@ -7,9 +7,19 @@ command line utility and underlying python module.
 Installation
 ============
 
-passgen can be installed with pip::
+passgen requires Python 2.7 or 3.x.
+
+passgen can be installed with `pip`::
 
     $ pip install passgen
+
+To install it from source, enter the source distribution directory and run::
+
+    $ python setup.py install
+
+To install in development mode, run from project directory::
+
+    $ pip install --user -e .
 
 Usage (command line)
 ====================
