@@ -29,7 +29,7 @@ passwords, and is as follows::
 
     $ passgen
 
-passgen can also accepts several arguments configuring the outcome.
+passgen accepts several arguments configuring its outcome.
 Overall synopsis is::
 
     $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits | --no-letters]
