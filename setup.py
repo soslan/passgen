@@ -9,8 +9,8 @@ with open('README.rst') as file:
     long_description = file.read()
 
 setup(name='passgen',
-      version='0.1.1',
-      description='Strong password generator',
+      version='1.0.0',
+      description='Random password generator',
       long_description=long_description,
       url='https://github.com/soslan/passgen',
       author='Soslan Khubulov',
@@ -24,8 +24,9 @@ setup(name='passgen',
       },
       py_modules=['passgen'],
       classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 5 - Production/Stable',
           'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
           'Environment :: Console',
           'Intended Audience :: End Users/Desktop',
           'Intended Audience :: Developers',
@@ -33,5 +34,5 @@ setup(name='passgen',
           'Natural Language :: English',
           'Topic :: Utilities',
       ],
-      keywords='password',
+      keywords='password random',
       )
