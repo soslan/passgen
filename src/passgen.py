@@ -14,7 +14,7 @@ import sys
 
 
 def passgen(length=12, punctuation=False, digits=True, letters=True,
-            case="both"):
+            case="both", **kwargs):
     """Generate random password.
 
     Args:
@@ -29,7 +29,10 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
         case (str): Letter case to use.  Accepts 'upper' for upper case,
             'lower' for lower case, and 'both' for both.  Defaults to
             'both'.
-
+    
+        limit_punctuation (str): Limits the allowed puncturation to defined 
+            characters.
+        
     Returns:
         str. The generated password.
 
@@ -47,6 +50,9 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     >>> passgen(length=6)
     EzJMRX
     """
+    limit_punctuation = kwargs.get('limit_punctuation', '')
+    max_punctuation = kwargs.get('max_punctuation', None)
+    
     if not digits and not letters:
         raise ValueError("digits and letters cannot be False at the same time")
     if length < 1:
@@ -64,7 +70,10 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     if digits:
         pool.append(string.digits)
     if punctuation:
-        pool.append(string.punctuation)
+        punctuation = string.punctuation
+        if limit_punctuation:
+            punctuation = limit_punctuation
+        pool.append(punctuation)
     pool = "".join(pool)
 
     chars = [random.choice(pool) for _ in range(length)]
