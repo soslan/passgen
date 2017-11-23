@@ -22,6 +22,8 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
             zero. Defaults to 12.
         punctuation (bool): Whether to use punctuation or not.  Defaults
             to False.
+        limit_punctuation (str): Limits the allowed puncturation to defined 
+            characters.
         digits (bool): Whether to use digits or not.  Defaults to True.
             One of *digits* and *letters* must be True.
         letters (bool): Whether to use letters or not.  Defaults to
@@ -29,9 +31,6 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
         case (str): Letter case to use.  Accepts 'upper' for upper case,
             'lower' for lower case, and 'both' for both.  Defaults to
             'both'.
-    
-        limit_punctuation (str): Limits the allowed puncturation to defined 
-            characters.
         
     Returns:
         str. The generated password.
@@ -50,8 +49,6 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     >>> passgen(length=6)
     EzJMRX
     """
-    limit_punctuation = kwargs.get('limit_punctuation', '')
-    max_punctuation = kwargs.get('max_punctuation', None)
     
     if not digits and not letters:
         raise ValueError("digits and letters cannot be False at the same time")
@@ -70,9 +67,13 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     if digits:
         pool.append(string.digits)
     if punctuation:
-        punctuation = string.punctuation
-        if limit_punctuation:
-            punctuation = limit_punctuation
+        limit_punctuation = kwargs.get('limit_punctuation', '')
+        if limit_punctuation == '':
+            punctuation = string.punctuation
+        else:
+            # In case limit_punctuation contains non-punctuation characters
+            punctuation = ''.join([p for p in limit_punctuation
+                                   if p in string.punctuation])
         pool.append(punctuation)
     pool = "".join(pool)
 
@@ -111,6 +112,9 @@ def main():
     parser.add_argument("-p", "--punctuation",
                         help="use punctuation characters",
                         action='store_true')
+    parser.add_argument("--limit-punctuation",
+                        help="specify allowed punctuation characters",
+                        action='store', default='')
     alnum_group = parser.add_mutually_exclusive_group()
     alnum_group.add_argument("--no-digits",
                              help="don't use digits",
@@ -141,6 +145,7 @@ def main():
 
     for _ in range(args.number):
         print(passgen(args.length, punctuation=args.punctuation,
+                      limit_punctuation=args.limit_punctuation,
                       digits=args.digits,
                       letters=args.letters, case=case))
 
