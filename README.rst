@@ -32,7 +32,9 @@ passwords, and is as follows::
 passgen accepts several arguments configuring its outcome.
 Overall synopsis is::
 
-    $ passgen [-h] [-l LENGTH] [-n NUMBER] [-p] [--no-digits | --no-letters]
+    $ passgen [-h] [-l LENGTH] [-n NUMBER]
+              [-p] [--limit-punctuation LIMIT_PUNCTUATION]
+              [--no-digits | --no-letters]
               [--upper | --lower]
 
 Arguments:
@@ -48,6 +50,9 @@ Arguments:
 
 -p, --punctuation
     Use punctuation characters
+
+--limit-punctuation LIMIT_PUNCTUATION
+    Specify allowed punctuation characters
 
 --no-digits
     Don't use digits
