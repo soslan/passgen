@@ -76,8 +76,14 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
                                    if p in string.punctuation])
         pool.append(punctuation)
     pool = "".join(pool)
-
-    chars = [random.choice(pool) for _ in range(length)]
+    chars = []
+    srandom = random.SystemRandom()
+    for i in range(length):
+        try:
+            char = srandom.choice(pool)
+        except:
+            char = random.choice(pool)
+        chars.append(char)
     return "".join(chars)
 
 
