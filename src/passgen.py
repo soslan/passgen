@@ -13,6 +13,72 @@ import argparse
 import sys
 
 
+class Generator():
+
+
+    def __init__(self, pool, random_generator, c_min=0, c_max=None):
+        self.pool = pool
+        self.set_limits(c_min, c_max)
+        self.counter = 0
+        self.random_generator = random_generator
+
+    def set_limits(self, c_min, c_max):
+        self.min = max(0, int(c_min))
+        self.max = c_max
+        if self.max is not None and self.min > self.max:
+            raise Exception("c_min should not be greater than c_max")
+
+    def generate(self):
+        try:
+            char = self.random_generator.choice(self.pool)
+        except:
+            char = random.choice(self.pool)
+        self.counter += 1
+        return char
+
+    def min_achieved(self):
+        return self.counter >= self.min
+
+    def max_achieved(self):
+        if self.max is None:
+            return False
+        return self.counter >= self.max
+
+class SuperGenerator(Generator):
+
+
+    def __init__(self, random_generator, c_min=0, c_max=None):
+        self.set_limits(c_min, c_max)
+        self.counter = 0
+        self.random_generator = random_generator
+        self.generators = []
+        self.minimums_achieved = False
+        self.maximums_achieved = False
+
+    def generate(self):
+        if not self.minimums_achieved:
+            pool = [i for i in self.generators if not i.min_achieved()]
+            if len(pool) == 0:
+                self.minimums_achieved = True
+                return self.generate()
+        elif not self.maximums_achieved:
+            pool = [i for i in self.generators if not i.max_achieved()]
+            if len(pool) == 0:
+                self.maximums_achieved = True
+                raise Exception("All maximums achieved")
+        else:
+            raise Exception("All maximums achieved")
+        try:
+            generator = self.random_generator.choice(pool)
+        except:
+            generator = random.choice(pool)
+        char = generator.generate()
+        self.counter += 1
+        return char
+
+    def add(self, gen):
+        self.generators.append(gen)
+
 def passgen(length=12, punctuation=False, digits=True, letters=True,
             case="both", **kwargs):
     """Generate random password.
@@ -49,41 +115,54 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     >>> passgen(length=6)
     EzJMRX
     """
-    
+
+    p_min = punctuation
+    p_max = 0 if punctuation is False else length
+    d_min = digits
+    d_max = 0 if digits is False else length
+    a_min = letters
+    a_max = 0 if letters is False else length
+
+    if d_min + p_min > length:
+        raise ValueError("Minimum punctuation and digits number cannot be greater than length")    
     if not digits and not letters:
         raise ValueError("digits and letters cannot be False at the same time")
     if length < 1:
         raise ValueError("length must be greater than zero")
-    pool = []
+
     if letters:
         if case == "both":
-            pool.append(string.ascii_uppercase + string.ascii_lowercase)
+            alpha = string.ascii_uppercase + string.ascii_lowercase
         elif case == "upper":
-            pool.append(string.ascii_uppercase)
+            alpha = string.ascii_uppercase
         elif case == "lower":
-            pool.append(string.ascii_lowercase)
+            alpha = string.ascii_lowercase
         else:
             raise ValueError("case can only be 'both', 'upper' or 'lower'")
-    if digits:
-        pool.append(string.digits)
+    else:
+        alpha = string.ascii_uppercase + string.ascii_lowercase
     if punctuation:
         limit_punctuation = kwargs.get('limit_punctuation', '')
         if limit_punctuation == '':
-            punctuation = string.punctuation
+            punctuation_set = string.punctuation
         else:
             # In case limit_punctuation contains non-punctuation characters
-            punctuation = ''.join([p for p in limit_punctuation
+            punctuation_set = ''.join([p for p in limit_punctuation
                                    if p in string.punctuation])
-        pool.append(punctuation)
-    pool = "".join(pool)
-    chars = []
+    else:
+        punctuation_set = string.punctuation
     srandom = random.SystemRandom()
-    for i in range(length):
-        try:
-            char = srandom.choice(pool)
-        except:
-            char = random.choice(pool)
-        chars.append(char)
+    p_generator = Generator(punctuation_set, srandom, p_min, p_max)
+    d_generator = Generator(string.digits, srandom, d_min, d_max)
+    a_generator = Generator(alpha, srandom, a_min, a_max)
+
+    main_generator = SuperGenerator(srandom, length, length)
+    main_generator.add(p_generator)
+    main_generator.add(a_generator)
+    main_generator.add(d_generator)
+    chars = []
+    while not main_generator.max_achieved():
+        chars.append(main_generator.generate())
     return "".join(chars)
 
 
