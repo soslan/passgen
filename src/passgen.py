@@ -36,6 +36,11 @@ class Generator():
         self.counter += 1
         return char
 
+    def __iter__(self):
+        while not self.max_achieved():
+            yield self.generate()
+        raise StopIteration()
+
     def min_achieved(self):
         return self.counter >= self.min
 
@@ -123,7 +128,7 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     a_min = letters
     a_max = 0 if letters is False else length
 
-    if d_min + p_min > length:
+    if d_min + p_min + a_min > length:
         raise ValueError("Minimum punctuation and digits number cannot be greater than length")    
     if not digits and not letters:
         raise ValueError("digits and letters cannot be False at the same time")
@@ -151,6 +156,7 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
                                    if p in string.punctuation])
     else:
         punctuation_set = string.punctuation
+
     srandom = random.SystemRandom()
     p_generator = Generator(punctuation_set, srandom, p_min, p_max)
     d_generator = Generator(string.digits, srandom, d_min, d_max)
@@ -161,8 +167,8 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     main_generator.add(a_generator)
     main_generator.add(d_generator)
     chars = []
-    while not main_generator.max_achieved():
-        chars.append(main_generator.generate())
+    for i in main_generator:
+        chars.append(i)
     return "".join(chars)
 
 
