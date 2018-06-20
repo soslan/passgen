@@ -169,6 +169,10 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     chars = []
     for i in main_generator:
         chars.append(i)
+    try:
+        srandom.shuffle(chars, srandom)
+    except:
+        random.shuffle(chars)
     return "".join(chars)
 
 
