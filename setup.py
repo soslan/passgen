@@ -16,7 +16,7 @@ setup(name='passgen',
       author='Soslan Khubulov',
       author_email='soslanx@gmail.com',
       license='MIT',
-      package_dir={'': 'passgen'},
+      package_dir={'': 'src'},
       entry_points={
           'console_scripts': [
               'passgen = passgen:main',
