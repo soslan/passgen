@@ -39,7 +39,6 @@ class Generator():
     def __iter__(self):
         while not self.max_achieved():
             yield self.generate()
-        raise StopIteration()
 
     def min_achieved(self):
         return self.counter >= self.min
