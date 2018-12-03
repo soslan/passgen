@@ -1,4 +1,5 @@
 import unittest
+import re
 from passgen import passgen
 
 
@@ -27,6 +28,23 @@ class TestPassgen(unittest.TestCase):
 
         password = passgen(length=15, case='upper', digits=False)
         self.assertEqual(len(password), 15)
+
+    def test_limit_punctuation(self):
+        pl = '.'
+        password = passgen(letters=True, digits=False, length=6,
+                           punctuation=True, limit_punctuation=pl)
+        password = re.sub(r"[a-zA-Z.]", "", password)
+        self.assertTrue(password == '')
+
+    def test_only_letters(self):
+        password = passgen(letters=True, digits=False)
+        password = re.sub(r"[a-zA-Z]", "", password)
+        self.assertTrue(password == '')
+
+    def test_only_digits(self):
+        password = passgen(letters=False, digits=True)
+        password = re.sub(r"[0-9]", "", password)
+        self.assertTrue(password == '')
 
 if __name__ == '__main__':
     unittest.main()
