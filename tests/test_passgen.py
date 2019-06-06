@@ -46,5 +46,17 @@ class TestPassgen(unittest.TestCase):
         password = re.sub(r"[0-9]", "", password)
         self.assertTrue(password == '')
 
+    def test_class_always_occurs(self):
+        # Generating 4-char password with all classes
+        for i in range(1, 100):
+            password = passgen(punctuation=True, case='both', length=4)
+            password = re.sub(r"[0-9]", "", password)
+            self.assertTrue(len(password) == 3)
+            password = re.sub(r"[a-z]", "", password)
+            self.assertTrue(len(password) == 2)
+            password = re.sub(r"[A-Z]", "", password)
+            self.assertTrue(len(password) == 1)
+
+
 if __name__ == '__main__':
     unittest.main()
