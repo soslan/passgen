@@ -120,31 +120,25 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     EzJMRX
     """
 
+    if not case in ("both", "lower", "upper"):
+        raise ValueError("case can only be 'both', 'upper' or 'lower'")
+
     p_min = punctuation
     p_max = 0 if punctuation is False else length
     d_min = digits
     d_max = 0 if digits is False else length
-    a_min = letters
-    a_max = 0 if letters is False else length
+    a_u_min = letters if case in ("both", "upper") else 0
+    a_u_max = 0 if letters is False or case == "lower" else length
+    a_l_min = letters if case in ("both", "lower") else 0
+    a_l_max = 0 if letters is False or case == "upper" else length
 
-    if d_min + p_min + a_min > length:
+    if d_min + p_min + a_u_min + a_l_min > length:
         raise ValueError("Minimum punctuation and digits number cannot be greater than length")    
     if not digits and not letters:
         raise ValueError("digits and letters cannot be False at the same time")
     if length < 1:
         raise ValueError("length must be greater than zero")
 
-    if letters:
-        if case == "both":
-            alpha = string.ascii_uppercase + string.ascii_lowercase
-        elif case == "upper":
-            alpha = string.ascii_uppercase
-        elif case == "lower":
-            alpha = string.ascii_lowercase
-        else:
-            raise ValueError("case can only be 'both', 'upper' or 'lower'")
-    else:
-        alpha = string.ascii_uppercase + string.ascii_lowercase
     if punctuation:
         limit_punctuation = kwargs.get('limit_punctuation', '')
         if limit_punctuation == '':
@@ -152,18 +146,20 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
         else:
             # In case limit_punctuation contains non-punctuation characters
             punctuation_set = ''.join([p for p in limit_punctuation
-                                   if p in string.punctuation])
+                                       if p in string.punctuation])
     else:
         punctuation_set = string.punctuation
 
     srandom = random.SystemRandom()
     p_generator = Generator(punctuation_set, srandom, p_min, p_max)
     d_generator = Generator(string.digits, srandom, d_min, d_max)
-    a_generator = Generator(alpha, srandom, a_min, a_max)
+    a_u_generator = Generator(string.ascii_uppercase, srandom, a_u_min, a_u_max)
+    a_l_generator = Generator(string.ascii_lowercase, srandom, a_l_min, a_l_max)
 
     main_generator = SuperGenerator(srandom, length, length)
     main_generator.add(p_generator)
-    main_generator.add(a_generator)
+    main_generator.add(a_u_generator)
+    main_generator.add(a_l_generator)
     main_generator.add(d_generator)
     chars = []
     for i in main_generator:
