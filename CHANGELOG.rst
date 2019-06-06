@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1 - 2019-06-06
+
+- Fix passgen(case='both') not always including both cases.
+
 1.1.0 - 2018-12-04
 ------------------
 
