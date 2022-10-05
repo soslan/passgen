@@ -126,6 +126,8 @@ TODO
   For example, ``passgen(min-punctuation=1)`` returning password with at least
   one punctuation.
 
+- Add the ability to exclude visually similar characters from the result.
+
 License
 =======
 
