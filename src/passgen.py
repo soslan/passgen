@@ -8,9 +8,9 @@ The module contains two functions:
 """
 from __future__ import print_function
 import string
-import random
 import argparse
 import sys
+import secrets
 
 
 class Generator():
@@ -32,7 +32,7 @@ class Generator():
         try:
             char = self.random_generator.choice(self.pool)
         except:
-            char = random.choice(self.pool)
+            char = secrets.choice(self.pool)
         self.counter += 1
         return char
 
@@ -75,7 +75,7 @@ class SuperGenerator(Generator):
         try:
             generator = self.random_generator.choice(pool)
         except:
-            generator = random.choice(pool)
+            generator = secrets.choice(pool)
         char = generator.generate()
         self.counter += 1
         return char
@@ -150,7 +150,7 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     else:
         punctuation_set = string.punctuation
 
-    srandom = random.SystemRandom()
+    srandom = secrets.SystemRandom()
     p_generator = Generator(punctuation_set, srandom, p_min, p_max)
     d_generator = Generator(string.digits, srandom, d_min, d_max)
     a_u_generator = Generator(string.ascii_uppercase, srandom, a_u_min, a_u_max)
@@ -164,10 +164,9 @@ def passgen(length=12, punctuation=False, digits=True, letters=True,
     chars = []
     for i in main_generator:
         chars.append(i)
-    try:
-        srandom.shuffle(chars, srandom)
-    except:
-        random.shuffle(chars)
+
+    srandom.shuffle(chars)
+
     return "".join(chars)
 
 
