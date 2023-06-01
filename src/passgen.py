@@ -213,10 +213,10 @@ def main():
                              help="don't use letters",
                              action='store_false', dest='letters')
     case_group = parser.add_mutually_exclusive_group()
-    case_group.add_argument("--upper",
+    case_group.add_argument("-C", "--upper",
                             help="use only upper case letters",
                             action='store_true')
-    case_group.add_argument("--lower",
+    case_group.add_argument("-c", "--lower",
                             help="use only lower case letters",
                             action='store_true')
     args = parser.parse_args()
